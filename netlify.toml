@@ -1,0 +1,25 @@
+# Netlify configuration.
+#
+# The site is pre-built locally (run `python build.py`) and the generated
+# output/ folder is what gets served. No build command runs on Netlify, so a
+# GitHub API hiccup can never break a deploy.
+#
+# If you'd rather have Netlify rebuild on every deploy (to refresh GitHub data
+# automatically), uncomment the [build] command below.
+
+[build]
+  publish = "output"
+  # command = "pip install -r requirements.txt && python build.py"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/resume.pdf"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
